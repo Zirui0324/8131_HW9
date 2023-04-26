@@ -1,0 +1,45 @@
+---
+title: "8131_HW9"
+author: "Zirui Zhang"
+date: "2023-04-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(KMsurv)
+library(survival)
+data(tongue)
+```
+
+
+```{r}
+# tongue data
+Surv(tongue$time, tongue$delta, type = 'right')
+# KM survival
+KM.1 = survfit(Surv(time, delta)~1, data = subset(tongue, type == 1), conf.type = 'log')
+KM.2 = survfit(Surv(time, delta)~1, data = subset(tongue, type == 2), conf.type = 'log')
+```
+
+
+```{r}
+# Kaplan-Meier curve of Aneuploid Tumor
+plot(KM.1, conf.int = T, mark.time = T, 
+     xlab = "Weeks", ylab = "Survival Probability",
+     main = "Aneuploid Tumor K-M curve")
+
+# Kaplan-Meier curve of Diploid Tumor
+plot(KM.2, conf.int = T, mark.time = T, 
+     xlab = "Weeks", ylab = "Survival Probability",
+     main = "Diploid Tumor K-M curve")
+```
+
+```{r}
+# survival rate at 1 year, with CI
+summary(KM.1, time = round(365/7, 0))
+summary(KM.2, time = round(365/7, 0))
+```
+
+The estimated 1-year survival rate and 95% CI of Aneuploid Tumor is 0.654, (0.537, 0.797).
+
+The estimated 1-year survival rate and 95% CI of Diploid Tumor is 0.486, (0.330, 0.716).
+
