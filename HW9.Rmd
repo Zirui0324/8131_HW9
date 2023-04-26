@@ -2,7 +2,7 @@
 title: "8131_HW9"
 author: "Zirui Zhang"
 date: "2023-04-26"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
